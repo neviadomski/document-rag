@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[[source]]
+url = "https://download.pytorch.org/whl/cpu"
+verify_ssl = true
+name = "downloadpytorch"
+
+[packages]
+llama-index = "*"
+llama-index-llms-ollama = "*"
+llama-index-embeddings-huggingface = "*"
+ipykernel = "*"
+widgetsnbextension = "*"
+ipywidgets = "*"
+llama-index-llms-groq = "*"
+pymupdf = "*"
+marker-pdf = "*"
+torch = {version = "*", index = "downloadpytorch"}
+llama-index-readers-pdf-marker = "*"
+scikit-learn = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
+python_full_version = "3.12.3"
