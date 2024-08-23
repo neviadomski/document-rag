@@ -1,0 +1,56 @@
+name: doc-qa
+
+services:
+  app:
+    build: .
+    image: app
+    container_name: app
+    ports:
+      - "8888:8888"
+    env_file:
+      - .env
+    volumes:
+      - ./app:/home/docqa/app
+    networks:
+      doc-qa-network:
+        ipv4_address: 172.30.0.2
+
+  ollama:
+    build: ./ollama
+    ports:
+      - "12434:11434"
+    entrypoint: /tmp/start.sh
+    image: ollama
+    container_name: ollama
+    tty: true
+    restart: always
+    volumes:
+      - ./ollama/models:/models
+    networks:
+      doc-qa-network:
+        ipv4_address: 172.30.0.3
+    profiles:
+      - full
+      - ollama
+
+  db:
+    image: redis/redis-stack-server:latest
+    container_name: db
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    restart: always
+    volumes:
+      - ./db/:/data
+    networks:
+      doc-qa-network:
+        ipv4_address: 172.30.0.4
+    profiles:
+      - full
+      - db
+
+networks:
+  doc-qa-network:
+    ipam:
+      config:
+        - subnet: "172.30.0.0/24"
