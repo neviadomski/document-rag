@@ -49,6 +49,21 @@ services:
       - full
       - db
 
+  phoenix:
+    image: arizephoenix/phoenix:latest
+    container_name: phoenix
+    ports:
+      - "6006:6006" # UI and OTLP HTTP collector
+      - "4317:4317" # OTLP gRPC collector
+    volumes:
+      - ./phoenix:/mnt/data
+    networks:
+      doc-qa-network:
+        ipv4_address: 172.30.0.5
+    profiles:
+      - full
+      - phoenix
+
 networks:
   doc-qa-network:
     ipam:
