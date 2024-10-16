@@ -2,7 +2,7 @@
 
 echo "Starting Ollama server..."
 ollama serve &
-ollama run llama3.1:latest
+ollama run llama3.2:latest
 
 
 echo "Waiting for Ollama server to be active..."

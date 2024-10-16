@@ -1,0 +1,8 @@
+llama-index
+llama-index-llms-ollama
+llama-index-embeddings-huggingface
+llama-index-llms-groq
+llama-index-storage-docstore-redis
+llama-index-storage-index-store-redis
+llama-index-vector-stores-redis
+pymupdf

@@ -3,3 +3,4 @@ ollama/models/
 .ipynb_checkpoints/
 
 Pipfile.lock
+.vscode/

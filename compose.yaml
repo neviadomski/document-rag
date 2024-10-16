@@ -1,16 +1,15 @@
 name: doc-qa
 
 services:
-  app:
-    build: .
-    image: app
-    container_name: app
+  juputer:
+    image: nevedomski/doc-qa-jupyter:latest
+    container_name: juputer
     ports:
       - "8888:8888"
     env_file:
       - .env
     volumes:
-      - ./app:/home/docqa/app
+      - ./jupyter:/home/jovyan
     networks:
       doc-qa-network:
         ipv4_address: 172.30.0.2
