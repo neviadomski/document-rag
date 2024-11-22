@@ -1,47 +1,39 @@
 import 'package:flutter/material.dart';
-// import 'package:pdf/pdf.dart';
-// import 'package:pdf/widgets.dart' as pw;
-// import 'package:printing/printing.dart';
 import 'package:pdfx/pdfx.dart';
 
-// class PdfViewer extends StatelessWidget {
-//   // open a PDF document from assets file
+class PdfViewer extends StatefulWidget {
+  const PdfViewer({super.key});
 
-//   var pdf = rootBundle.load('assets/ocument.pdf');
+  @override
+  State<PdfViewer> createState() => _PdfViewerState();
+}
 
-//   PdfViewer({super.key});
+class _PdfViewerState extends State<PdfViewer> {
+  @override
+  Widget build(BuildContext context) {
+    final platform = Theme.of(context).platform;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('PDF Viewer'),
-//       ),
-//       body: PdfPreview(
-//         build: (format) => pdf.buffer.asUint8List().save(),
-//       ),
-//     );
-//   }
-// }
-
-// class PdfViewer extends StatelessWidget {
-//   // open a PDF document from assets file
-
-//   final pdfController = PdfController(
-//     document: PdfDocument.openAsset('assets/sample.pdf'),
-//   );
-//   PdfViewer({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final document = PdfDocument.openAsset('assets/sample.pdf');
-//     final page = document.getPage(1);
-
-//     final pageImage = page.render(width: page.width, height: page.height);
-
-//     page.close();
-//     return Image(
-//       image: MemoryImage(pageImage.bytes),
-//     );
-//   }
-// }
+    if (<TargetPlatform>[
+      TargetPlatform.windows,
+      TargetPlatform.linux,
+      TargetPlatform.macOS
+    ].contains(platform)) {
+      // Pdf view with re-render pdf texture on zoom (not loose quality on zoom)
+      // Not supported on windows
+      // Also not usable without pinch
+      final pdfController = PdfController(
+        document: PdfDocument.openAsset('assets/PNC 2023 Annual Report.pdf'),
+      );
+      return PdfView(
+        controller: pdfController,
+      );
+    } else {
+      final pdfController = PdfControllerPinch(
+        document: PdfDocument.openAsset('assets/PNC 2023 Annual Report.pdf'),
+      );
+      return PdfViewPinch(
+        controller: pdfController,
+      );
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:doc_qa_front_end/screens/home/chat.dart';
+import 'package:doc_qa_front_end/screens/home/pdf_viewer.dart';
 import 'package:doc_qa_front_end/drawer.dart';
 
 class Home extends StatefulWidget {
@@ -27,13 +28,15 @@ class _HomeState extends State<Home> {
           MediaQuery.of(context).size.width > 600
               ? LeftPaneRail()
               : Container(),
+          // PdfViewer
           Expanded(
             flex: 3,
             child: Container(
               padding: const EdgeInsets.all(16),
-              child: Placeholder(),
+              child: PdfViewer(),
             ),
           ),
+          // MainChat
           Expanded(
             flex: 3,
             child: Container(

@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_filex/open_filex.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 var uuid = Uuid();
@@ -46,17 +46,30 @@ class _MainChatState extends State<MainChat> {
       allowedExtensions: ['pdf'],
     );
 
-    if (result != null && result.files.single.path != null) {
-      final message = types.FileMessage(
+    if (result != null) {
+      // Persist file and return the uri
+      final String pdfUri = "assets/PNC 2023 Annual Report.pdf";
+
+      final fileMessage = types.FileMessage(
         author: _users['user']!,
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: uuid.v4(),
         name: result.files.single.name,
         size: result.files.single.size,
-        uri: result.files.single.path!,
+        uri: pdfUri,
       );
 
-      _addMessage(message);
+      _addMessage(fileMessage);
+
+      final textMessage = types.TextMessage(
+        author: _users['system']!,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: uuid.v4(),
+        text:
+            "PDF File '${fileMessage.name}' uploaded. Agentic RAG can answer questions about this document.",
+      );
+
+      _addMessage(textMessage);
     }
   }
 
@@ -134,5 +147,14 @@ class _MainChatState extends State<MainChat> {
     );
 
     _addMessage(textMessage);
+
+    final textChatMessage = types.TextMessage(
+      author: _users['chat']!,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: uuid.v4(),
+      text: "REALLY!!!  Not the best question. Try harder.",
+    );
+
+    _addMessage(textChatMessage);
   }
 }
