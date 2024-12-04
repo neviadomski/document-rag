@@ -11,12 +11,14 @@ class PaneItem {
   final Widget selectedIcon;
 }
 
+// Menu pane
 const List<PaneItem> leftPaneItems = <PaneItem>[
   PaneItem('Home', Icon(Icons.home_max_outlined), Icon(Icons.home_max)),
   PaneItem('Profile', Icon(Icons.person_2_outlined), Icon(Icons.person_2)),
   PaneItem('Settings', Icon(Icons.settings_outlined), Icon(Icons.settings)),
 ];
 
+// Chat pane
 const List<PaneItem> rightPaneItems = <PaneItem>[
   PaneItem('Chat', Icon(Icons.chat_outlined), Icon(Icons.chat)),
   PaneItem('Chat 2', Icon(Icons.chat_outlined), Icon(Icons.chat)),
@@ -93,6 +95,8 @@ class _LeftPaneRailState extends State<LeftPaneRail> {
       selectedIndex: _selectedIndex,
       labelType: labelType,
       minWidth: 120,
+      backgroundColor: Colors.grey[200],
+      indicatorColor: Colors.cyan[50],
       destinations: [
         ...leftPaneItems.map(
           (PaneItem destination) {
@@ -179,6 +183,7 @@ class _RightPaneRailState extends State<RightPaneRail> {
       selectedIndex: _selectedIndex,
       labelType: labelType,
       minWidth: 120,
+      backgroundColor: Colors.grey[50],
       destinations: [
         ...rightPaneItems.map(
           (PaneItem destination) {
